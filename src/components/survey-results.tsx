@@ -49,16 +49,27 @@ const SurveyResults = ({ id }: { id: string }) => {
 
 	useEffect(() => {
 		const loadSurvey = async () => {
-			try {
-				const surveys = JSON.parse(localStorage.getItem('surveys') || '[]');
-				const survey = surveys.find(s => s.id === id);
-				if (!survey) throw new Error('Survey not found');
-				setSurvey(survey);
-			} catch (error) {
-				router.push('/404');
-			} finally {
-				setLoading(false);
-			}
+			// try {
+			// 	const surveys = JSON.parse(localStorage.getItem('surveys') || '[]');
+			// 	const survey = surveys.find(s => s.id === id);
+			// 	if (!survey) throw new Error('Survey not found');
+			// 	setSurvey(survey);
+			// } catch (error) {
+			// 	router.push('/404');
+			// } finally {
+			// 	setLoading(false);
+			// }
+			fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/surveys/' + id + '/analytics')
+				.then((res) => res.json())
+				.then(({ survey }) => {
+					setSurvey(survey);
+				})
+				.catch(() => {
+					router.push('/404');
+				})
+				.finally(() => {
+					setLoading(false);
+				})
 		};
 		loadSurvey();
 	}, [id, router]);

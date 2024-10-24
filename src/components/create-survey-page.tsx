@@ -63,18 +63,36 @@ const CreateSurveyPage = () => {
 				throw new Error('All questions must have text');
 			}
 
-			const newSurvey = {
-				...survey,
-				id: Date.now().toString(),
-				created: new Date().toISOString(),
-				responses: []
-			};
+			// const newSurvey = {
+			// 	...survey,
+			// 	id: Date.now().toString(),
+			// 	created: new Date().toISOString(),
+			// 	responses: []
+			// };
 
-			// Get existing surveys
-			const existingSurveys = JSON.parse(localStorage.getItem('surveys') || '[]');
-			localStorage.setItem('surveys', JSON.stringify([...existingSurveys, newSurvey]));
+			fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/surveys', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(survey),
+			})
+				.then((res) => {
+					if (res) {
+						router.push('/surveys');
+					}
+				})
+				.catch(err => {
+					alert(err.message)
+				})
 
-			router.push('/surveys');
+			// return response.json();
+
+			// // Get existing surveys
+			// const existingSurveys = JSON.parse(localStorage.getItem('surveys') || '[]');
+			// localStorage.setItem('surveys', JSON.stringify([...existingSurveys, newSurvey]));
+
+			// router.push('/surveys');
 		} catch (error) {
 			alert(error.message);
 		} finally {

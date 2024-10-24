@@ -1,35 +1,26 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import QRCode from 'react-qr-code';
+import * as htmlToImage from 'html-to-image';
 
 
 // QR Code generation using SVG (simplified version)
-const QRCodeSVG = ({ text }) => {
-	const size = 200;
-	const darkSquares = text.split('').map((char, i) => ({
-		x: (i % 8) * 25,
-		y: Math.floor(i / 8) * 25
-	}));
-
+const QRCodeSVG = (text, ref = "", size = 200) => {
+	// const size = 200;
 	return (
-		<svg viewBox={`0 0 ${size} ${size}`} className="w-32 h-32">
-			<rect width={size} height={size} fill="white" />
-			{darkSquares.map((square, i) => (
-				<rect
-					key={i}
-					x={square.x}
-					y={square.y}
-					width="20"
-					height="20"
-					fill="black"
-				/>
-			))}
-		</svg>
+		<QRCode
+			size={size}
+			style={{ height: "auto", maxWidth: size, width: size }}
+			value={text}
+			viewBox='0 0 256 256'
+			{...(ref ? { ref } : {})}
+		/>
 	);
 };
 
@@ -45,19 +36,45 @@ const Surveys = () => {
 	const [surveys, setSurveys] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	const qrCodeRef = useRef(<svg></svg>);
+
 	useEffect(() => {
+		// const loadSurveys = async () => {
+		// 	try {
+		// 		const saved = localStorage.getItem('surveys');
+		// 		setSurveys(saved ? JSON.parse(saved) : []);
+		// 	} finally {
+		// 		setLoading(false);
+		// 	}
+		// };
 		const loadSurveys = async () => {
-			try {
-				const saved = localStorage.getItem('surveys');
-				setSurveys(saved ? JSON.parse(saved) : []);
-			} finally {
-				setLoading(false);
-			}
+			fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/surveys')
+				.then((res) => res.json())
+				.then((data) => {
+					setSurveys(data);
+				})
+				.catch(() => {
+					setSurveys([])
+				})
+				.finally(() => {
+					setLoading(false);
+				})
 		};
 		loadSurveys();
 	}, []);
 
 	if (loading) return <LoadingSpinner />;
+
+	const downloadQrCode = (survey) => {
+		htmlToImage.toPng(qrCodeRef.current)
+			.then((dataUrl) => {
+				const link = document.createElement("a");
+				link.href = dataUrl;
+				link.download = 'survey_' + survey.id + 'qr_code.png';
+				link.click();
+			})
+			.catch(() => { })
+	}
 
 	return (
 		<div className="space-y-4">
@@ -78,12 +95,26 @@ const Surveys = () => {
 							>
 								View Results
 							</Button>
+							<Button
+								variant="outline"
+								onClick={() => downloadQrCode(survey)}
+							>
+								Download QR Code
+							</Button>
 						</div>
 					</div>
 					<Separator className="my-4" />
 					<div className="flex justify-center">
-						<QRCodeSVG text={`${window.location.origin}/survey/${survey.id}`} />
+						{
+							QRCodeSVG(`${window.location.origin}/survey/${survey.id}`)
+						}
 					</div>
+					<div style={{height: 0, overflow: 'hidden'}}>
+						{/* <QRCodeSVG ref={qrCodeRef} text={`${window.location.origin}/survey/${survey.id}`} /> */}
+							{
+								QRCodeSVG(`${window.location.origin}/survey/${survey.id}`, qrCodeRef, 800)
+							}
+						</div>
 				</Card>
 			))}
 		</div>
