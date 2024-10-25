@@ -1,7 +1,6 @@
 import React from "react";
 import localFont from "next/font/local";
 import "./globals.css";
-import Breadcrumb from "@/components/breadcrumbs";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
