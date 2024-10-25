@@ -21,6 +21,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import { QUESTION_TYPES, RATINGS, RATINGS_10 } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import Breadcrumb from './breadcrumbs';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
@@ -159,6 +160,8 @@ const SurveyResults = ({ id }: { id: string }) => {
 	};
 
 	return (
+		<>
+			<Breadcrumb />
 		<Card>
 			<CardHeader>
 				<CardTitle>Results: {survey.title}</CardTitle>
@@ -196,6 +199,7 @@ const SurveyResults = ({ id }: { id: string }) => {
 				</div>
 			</CardContent>
 		</Card>
+		</>
 	);
 };
 

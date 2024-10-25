@@ -8,6 +8,7 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import QRCode from 'react-qr-code';
 import * as htmlToImage from 'html-to-image';
+import Breadcrumb from './breadcrumbs';
 
 
 // QR Code generation using SVG (simplified version)
@@ -77,6 +78,8 @@ const Surveys = () => {
 	}
 
 	return (
+		<>
+			<Breadcrumb />
 		<div className="space-y-4">
 			{surveys.map(survey => (
 				<Card key={survey.id} className="p-4">
@@ -106,18 +109,19 @@ const Surveys = () => {
 					<Separator className="my-4" />
 					<div className="flex justify-center">
 						{
-							QRCodeSVG(`${window.location.origin}/survey/${survey.id}`)
+							QRCodeSVG(`${window.location.origin}/surveys/${survey.id}`)
 						}
 					</div>
-					<div style={{height: 0, overflow: 'hidden'}}>
+					<div style={{ height: 0, overflow: 'hidden' }}>
 						{/* <QRCodeSVG ref={qrCodeRef} text={`${window.location.origin}/survey/${survey.id}`} /> */}
-							{
-								QRCodeSVG(`${window.location.origin}/survey/${survey.id}`, qrCodeRef, 800)
-							}
-						</div>
+						{
+							QRCodeSVG(`${window.location.origin}/surveys/${survey.id}`, qrCodeRef, 800)
+						}
+					</div>
 				</Card>
 			))}
 		</div>
+		</>
 	);
 };
 

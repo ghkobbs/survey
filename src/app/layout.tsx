@@ -31,7 +31,7 @@ export default function RootLayout({
 			>
 				<main className="min-h-screen p-4 md:p-8">
 					<div className="container mx-auto p-4 max-w-6xl">
-						<Breadcrumb />
+						{/* <Breadcrumb /> */}
 						{children}
 					</div>
 				</main>

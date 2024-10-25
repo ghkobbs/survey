@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { QrCode, PlusCircle, BarChart3 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Breadcrumb from './breadcrumbs';
 // import Breadcrumb from './breadcrumbs';
 
 const HomePage = () => {
@@ -11,6 +12,7 @@ const HomePage = () => {
 
 	return (
 		<>
+			<Breadcrumb />
 			<div className="grid gap-4 md:grid-cols-3">
 				<Card className="p-6 hover:shadow-lg transition-shadow">
 					<CardHeader>
