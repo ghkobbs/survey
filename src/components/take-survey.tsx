@@ -134,7 +134,7 @@ const TakeSurvey = ({ id }: { id: string }) => {
 							</Label>
 
 							{question.type === QUESTION_TYPES.RATING && (
-								<div className="flex gap-2">
+								<div className="flex gap-2 flex-wrap">
 									{RATINGS.map(option => (
 										<Button
 											key={option}
@@ -149,7 +149,7 @@ const TakeSurvey = ({ id }: { id: string }) => {
 							)}
 
 							{question.type === QUESTION_TYPES.RATING_10 && (
-								<div className="flex gap-2">
+								<div className="flex gap-2 flex-wrap">
 									{RATINGS_10.map(option => (
 										<Button
 											key={option}
