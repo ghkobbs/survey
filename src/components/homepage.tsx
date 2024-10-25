@@ -34,7 +34,7 @@ const HomePage = () => {
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<Button onClick={() => router.push('/surveys')} className="w-full">
+						<Button onClick={() => router.push('/surveys/list')} className="w-full">
 							Browse
 						</Button>
 					</CardContent>

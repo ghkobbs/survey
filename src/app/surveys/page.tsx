@@ -1,9 +1,8 @@
-import Surveys from '@/components/surveys'
 import React from 'react'
 
 function SurveysPage() {
 	return (
-		<Surveys />
+		<div>Nothing Found</div>
 	)
 }
 

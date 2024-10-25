@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react'
 import { Button } from './ui/button';
-import Home from '@/app/page';
 
 const NotFound = () => (
 	<div className="flex flex-col items-center justify-center h-96">

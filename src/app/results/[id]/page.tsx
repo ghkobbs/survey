@@ -1,8 +1,9 @@
 import SurveyResults from '@/components/survey-results';
-import React, { Usable } from 'react'
+import React from 'react'
+import { PageProps } from '../../../../.next/types/app/page';
 
-function SurveyResultsPage({ params }: { params: Usable<unknown> }) {
-	const { id } = React.use(params);
+async function SurveyResultsPage(props: PageProps) {
+	const { id } = await props.params;
 
 	return (
 		<SurveyResults id={id} />

@@ -19,7 +19,7 @@ const Breadcrumb = () => {
 			<Button
 				variant="ghost"
 				size="sm"
-				onClick={() => router.push('/backoffice')}
+				onClick={() => router.push('/')}
 				className="p-0"
 			>
 				Home

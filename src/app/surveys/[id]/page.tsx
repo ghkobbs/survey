@@ -1,8 +1,9 @@
 import TakeSurvey from '@/components/take-survey'
-import React, { Usable } from 'react'
+import React from 'react'
+import { PageProps } from '../../../../.next/types/app/page';
 
-function TakeSurveyPage({ params }: { params: Usable<unknown> }) {
-	const { id } = React.use(params);
+async function TakeSurveyPage(props: PageProps) {
+	const { id } = await props.params;
 
 	return (
 		<TakeSurvey id={id} />
