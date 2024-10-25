@@ -88,7 +88,7 @@ const TakeSurvey = ({ id }: { id: string }) => {
 		// } finally {
 		// 	setLoading(false);
 		// }
-		fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/surveys/' + id + '/responses/', {
+		fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/surveys/' + id + '/responses', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
